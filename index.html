@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Private Travel Collection</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'aura-black': '#1a1a1a',
+                        'aura-gold': '#d4af37',
+                        'aura-cream': '#f9f9f7',
+                        'aura-grey': '#8c8c8c'
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Animations & Utilities */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .image-hover-zoom {
+            overflow: hidden;
+        }
+        .image-hover-zoom img {
+            transition: transform 0.7s ease;
+        }
+        .image-hover-zoom:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37; 
+        }
+    </style>
+</head>
+<body class="bg-aura-cream text-aura-black antialiased selection:bg-aura-gold selection:text-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 bg-transparent text-white">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl md:text-3xl font-serif tracking-widest font-bold flex items-center gap-2 group">
+                <span class="border-2 border-current px-2 py-1 group-hover:border-aura-gold transition-colors duration-300">A</span>URA
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-12 font-light text-sm tracking-widest uppercase">
+                <a href="#philosophy" class="hover:text-aura-gold transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[1px] after:bg-aura-gold after:transition-all hover:after:w-full">Filosofía</a>
+                <a href="#destinations" class="hover:text-aura-gold transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[1px] after:bg-aura-gold after:transition-all hover:after:w-full">Colección</a>
+                <a href="#services" class="hover:text-aura-gold transition-colors relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-0 after:h-[1px] after:bg-aura-gold after:transition-all hover:after:w-full">Servicios</a>
+                <a href="#contact" class="px-6 py-2 border border-white hover:border-aura-gold hover:text-aura-gold transition-all duration-300">Reservar</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-aura-black bg-opacity-95 z-50 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8">
+            <button id="close-menu-btn" class="absolute top-6 right-6 text-white">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <a href="#philosophy" class="text-2xl text-white font-serif hover:text-aura-gold mobile-link">Filosofía</a>
+            <a href="#destinations" class="text-2xl text-white font-serif hover:text-aura-gold mobile-link">Colección</a>
+            <a href="#services" class="text-2xl text-white font-serif hover:text-aura-gold mobile-link">Servicios</a>
+            <a href="#contact" class="text-2xl text-white font-serif hover:text-aura-gold mobile-link">Reservar</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-fixed text-white overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <p class="text-sm md:text-base tracking-[0.3em] uppercase mb-6 fade-up delay-100">Exclusividad sin límites</p>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-tight fade-up delay-200">
+                El mundo espera, <br> <span class="italic text-aura-gold">vívelo distinto.</span>
+            </h1>
+            <p class="text-lg md:text-xl font-light mb-12 max-w-2xl mx-auto text-gray-200 fade-up delay-300">
+                Diseñamos viajes a medida para aquellos que creen que el lujo es la privacidad, el tiempo y la experiencia.
+            </p>
+            <div class="fade-up delay-500">
+                <a href="#destinations" class="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-white/30 bg-white/10 px-8 py-3 transition-all hover:bg-white/20 backdrop-blur-sm">
+                    <span class="text-sm font-medium tracking-widest uppercase">Explorar Destinos</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-white/50"></i>
+        </div>
+    </header>
+
+    <!-- Philosophy / About -->
+    <section id="philosophy" class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="fade-up">
+                <h2 class="text-aura-gold text-sm tracking-[0.2em] uppercase mb-4">Nuestra Filosofía</h2>
+                <h3 class="text-4xl md:text-5xl font-serif leading-tight mb-8">
+                    No vendemos viajes.<br>Diseñamos <span class="italic text-gray-400">recuerdos</span>.
+                </h3>
+                <p class="text-gray-600 leading-relaxed mb-6 font-light">
+                    En AURA, entendemos que el verdadero lujo no se trata de opulencia, sino de acceso. Acceso a lugares inexplorados, a momentos de silencio absoluto en la inmensidad de la naturaleza, y a encuentros culturales auténticos lejos de las multitudes.
+                </p>
+                <p class="text-gray-600 leading-relaxed font-light">
+                    Cada itinerario es una pieza de arte, curada meticulosamente por nuestros expertos concierge para adaptarse a sus deseos más profundos, incluso aquellos que aún no sabe que tiene.
+                </p>
+                <div class="mt-8 flex items-center gap-4">
+                    <img src="https://api.dicebear.com/7.x/initials/svg?seed=Aura&backgroundColor=1a1a1a&textColor=d4af37" alt="Signature" class="w-12 h-12 rounded-full">
+                    <div>
+                        <p class="font-serif text-lg">Elena Vólkov</p>
+                        <p class="text-xs uppercase tracking-wider text-gray-500">Fundadora & CEO</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative h-[600px] w-full fade-up delay-200">
+                <div class="absolute inset-0 bg-gray-200 image-hover-zoom overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop" alt="Luxury Hotel Interior" class="w-full h-full object-cover">
+                </div>
+                <!-- Floating Card -->
+                <div class="absolute -bottom-10 -left-10 bg-white p-8 shadow-2xl max-w-xs hidden md:block">
+                    <p class="font-serif text-2xl italic mb-2">"Impecable"</p>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest">Travel & Leisure, 2024</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curated Destinations -->
+    <section id="destinations" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-aura-gold text-sm tracking-[0.2em] uppercase">Colección 2024</span>
+                <h2 class="text-4xl md:text-5xl font-serif mt-4">Destinos Destacados</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <article class="group relative h-[500px] cursor-pointer overflow-hidden fade-up">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-10"></div>
+                    <!-- Kyoto -->
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop" alt="Kyoto" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute bottom-0 left-0 p-8 z-20 text-white w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <span class="text-xs uppercase tracking-widest text-aura-gold mb-2 block">Japón</span>
+                        <h3 class="text-3xl font-serif mb-2">Kyoto Eterno</h3>
+                        <p class="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 font-light text-gray-200">
+                            Ceremonias de té privadas en templos cerrados al público y estancias en ryokans centenarios.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="group relative h-[500px] cursor-pointer overflow-hidden fade-up delay-100 md:-mt-12">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-10"></div>
+                    <!-- Nueva imagen de Santorini (Enlace actualizado) -->
+                    <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?q=80&w=2070&auto=format&fit=crop" alt="Santorini" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute bottom-0 left-0 p-8 z-20 text-white w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <span class="text-xs uppercase tracking-widest text-aura-gold mb-2 block">Grecia</span>
+                        <h3 class="text-3xl font-serif mb-2">Santorini Privado</h3>
+                        <p class="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 font-light text-gray-200">
+                            Villas suspendidas en el acantilado y navegación en yate privado al atardecer por la caldera.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="group relative h-[500px] cursor-pointer overflow-hidden fade-up delay-200">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-10"></div>
+                    <!-- Imagen de Patagonia reemplazada por una alternativa de alta disponibilidad -->
+                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop" alt="Patagonia" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute bottom-0 left-0 p-8 z-20 text-white w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <span class="text-xs uppercase tracking-widest text-aura-gold mb-2 block">Chile</span>
+                        <h3 class="text-3xl font-serif mb-2">Patagonia Salvaje</h3>
+                        <p class="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 font-light text-gray-200">
+                            Glamping de ultra lujo y expediciones privadas a glaciares inaccesibles.
+                        </p>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block text-aura-black border-b border-aura-black pb-1 hover:text-aura-gold hover:border-aura-gold transition-colors font-medium text-sm tracking-widest uppercase">Ver todo el catálogo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 bg-aura-cream px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div class="fade-up">
+                    <div class="mb-6 text-aura-gold">
+                        <i data-lucide="plane" class="w-10 h-10 stroke-1"></i>
+                    </div>
+                    <h4 class="text-xl font-serif mb-4">Aviación Privada</h4>
+                    <p class="text-gray-600 font-light text-sm leading-relaxed">
+                        Acceso a una flota global de jets privados. Sin filas, sin esperas, directo a su destino.
+                    </p>
+                </div>
+                <div class="fade-up delay-100">
+                    <div class="mb-6 text-aura-gold">
+                        <i data-lucide="key" class="w-10 h-10 stroke-1"></i>
+                    </div>
+                    <h4 class="text-xl font-serif mb-4">Concierge 24/7</h4>
+                    <p class="text-gray-600 font-light text-sm leading-relaxed">
+                        Un asistente personal dedicado antes, durante y después de su viaje para cualquier petición.
+                    </p>
+                </div>
+                <div class="fade-up delay-200">
+                    <div class="mb-6 text-aura-gold">
+                        <i data-lucide="utensils-crossed" class="w-10 h-10 stroke-1"></i>
+                    </div>
+                    <h4 class="text-xl font-serif mb-4">Gastronomía Exclusiva</h4>
+                    <p class="text-gray-600 font-light text-sm leading-relaxed">
+                        Reservas prioritarias en restaurantes Michelin y cenas privadas con chefs de renombre.
+                    </p>
+                </div>
+                <div class="fade-up delay-300">
+                    <div class="mb-6 text-aura-gold">
+                        <i data-lucide="gem" class="w-10 h-10 stroke-1"></i>
+                    </div>
+                    <h4 class="text-xl font-serif mb-4">Acceso VIP</h4>
+                    <p class="text-gray-600 font-light text-sm leading-relaxed">
+                        Eventos deportivos, semanas de la moda y galas artísticas. Si existe, podemos llevarle.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial / Visual Break -->
+    <section class="relative h-[60vh] flex items-center justify-center bg-fixed bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2070&auto=format&fit=crop');">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative z-10 max-w-4xl mx-auto text-center px-6">
+            <i data-lucide="quote" class="w-12 h-12 text-aura-gold mx-auto mb-8 opacity-80"></i>
+            <blockquote class="text-2xl md:text-4xl font-serif text-white leading-relaxed italic mb-8">
+                "AURA transformó nuestra manera de ver el mundo. No fue solo un viaje a Italia, fue vivir Italia como si fuera nuestra."
+            </blockquote>
+            <cite class="text-white/80 font-light tracking-widest uppercase text-sm not-italic">- Familia Rothschild, Nueva York</cite>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="py-24 bg-aura-black text-white px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-4xl md:text-5xl font-serif mb-4">Comience su viaje</h2>
+                <p class="text-gray-400 font-light">Cuéntenos sus sueños, nosotros nos encargamos de la logística.</p>
+            </div>
+
+            <form class="space-y-8 fade-up delay-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="group relative">
+                        <input type="text" id="name" required class="block w-full bg-transparent border-b border-gray-700 py-3 text-white focus:outline-none focus:border-aura-gold transition-colors peer">
+                        <label for="name" class="absolute left-0 top-3 text-gray-500 transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-aura-gold peer-valid:-top-6 peer-valid:text-xs">Nombre Completo</label>
+                    </div>
+                    <div class="group relative">
+                        <input type="email" id="email" required class="block w-full bg-transparent border-b border-gray-700 py-3 text-white focus:outline-none focus:border-aura-gold transition-colors peer">
+                        <label for="email" class="absolute left-0 top-3 text-gray-500 transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-aura-gold peer-valid:-top-6 peer-valid:text-xs">Email Privado</label>
+                    </div>
+                </div>
+
+                <div class="group relative">
+                    <select id="interest" class="block w-full bg-transparent border-b border-gray-700 py-3 text-white focus:outline-none focus:border-aura-gold transition-colors appearance-none">
+                        <option value="" disabled selected class="bg-aura-black text-gray-500">Tipo de Experiencia</option>
+                        <option value="leisure" class="bg-aura-black">Vacaciones de Lujo</option>
+                        <option value="adventure" class="bg-aura-black">Expedición & Aventura</option>
+                        <option value="business" class="bg-aura-black">Viaje Corporativo</option>
+                        <option value="honeymoon" class="bg-aura-black">Luna de Miel</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="absolute right-0 top-3 w-4 h-4 text-gray-500 pointer-events-none"></i>
+                </div>
+
+                <div class="group relative">
+                    <textarea id="message" rows="4" class="block w-full bg-transparent border-b border-gray-700 py-3 text-white focus:outline-none focus:border-aura-gold transition-colors peer"></textarea>
+                    <label for="message" class="absolute left-0 top-3 text-gray-500 transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-aura-gold peer-valid:-top-6 peer-valid:text-xs">Detalles adicionales</label>
+                </div>
+
+                <div class="text-center pt-8">
+                    <button type="button" onclick="alert('Gracias por su interés. Un concierge personal se pondrá en contacto con usted en breve.')" class="bg-aura-gold text-aura-black px-10 py-4 text-sm font-semibold tracking-widest uppercase hover:bg-white transition-colors duration-300">
+                        Solicitar Consulta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-aura-black text-white pt-12 pb-8 border-t border-gray-900 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <a href="#" class="text-2xl font-serif font-bold tracking-widest">AURA</a>
+                <p class="text-xs text-gray-500 mt-2 tracking-wider">EST. 1994</p>
+            </div>
+
+            <div class="flex space-x-8 text-sm font-light tracking-wide text-gray-400">
+                <a href="#" class="hover:text-aura-gold transition-colors">Instagram</a>
+                <a href="#" class="hover:text-aura-gold transition-colors">Facebook</a>
+                <a href="#" class="hover:text-aura-gold transition-colors">LinkedIn</a>
+            </div>
+            
+            <div class="text-xs text-gray-600 font-light text-center md:text-right">
+                <p>&copy; 2024 AURA Travel Agency. Todos los derechos reservados.</p>
+                <div class="flex gap-4 justify-center md:justify-end mt-2">
+                    <a href="#" class="hover:text-gray-400">Privacidad</a>
+                    <a href="#" class="hover:text-gray-400">Términos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        const links = navbar.querySelectorAll('a');
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const logo = navbar.querySelector('span');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-aura-black', 'shadow-md', 'py-4');
+                navbar.classList.remove('bg-transparent', 'py-6');
+            } else {
+                navbar.classList.add('bg-transparent', 'py-6');
+                navbar.classList.remove('bg-aura-black', 'shadow-md', 'py-4');
+            }
+        });
+
+        // Mobile Menu Logic
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+
+        // Intersection Observer for Fade Up Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
